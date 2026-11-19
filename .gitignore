@@ -1,0 +1,16 @@
+# Dependencias y compilados
+node_modules/
+dist/
+.angular/
+
+# Variables de entorno (credenciales / secretos). Se versiona solo .env.example
+.env
+
+# Configuración local del editor / herramientas
+.claude/
+.vscode/
+*.log
+
+# Material personal de estudio (no forma parte de la entrega)
+GUIA_DEFENSA.md
+actividad_06_gu_a_completa(Ejemplo a seguir).md
