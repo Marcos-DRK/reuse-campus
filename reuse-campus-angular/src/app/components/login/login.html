@@ -1,0 +1,35 @@
+<section class="contenedor-chico tarjeta">
+  <h2>Iniciar sesión</h2>
+
+  @if (sesionExpirada) {
+    <p class="alerta info">Su sesión expiró. Ingrese nuevamente.</p>
+  }
+
+  <form class="formulario" [formGroup]="formulario" (ngSubmit)="ingresar()">
+    <label for="correo">Correo</label>
+    <input id="correo" type="email" formControlName="correo" placeholder="usuario@reuse.cl">
+    @if (formulario.controls.correo.touched && formulario.controls.correo.invalid) {
+      <small class="error-campo">Ingrese un correo válido.</small>
+    }
+
+    <label for="password">Contraseña</label>
+    <input id="password" type="password" formControlName="password">
+    @if (formulario.controls.password.touched && formulario.controls.password.invalid) {
+      <small class="error-campo">La contraseña es obligatoria.</small>
+    }
+
+    <button type="submit" [disabled]="enviando()">{{ enviando() ? 'Ingresando...' : 'Ingresar' }}</button>
+  </form>
+
+  @if (error()) {
+    <p class="alerta error">{{ error() }}</p>
+  }
+
+  <p>¿No tiene cuenta? <a routerLink="/registro">Regístrese aquí</a></p>
+
+  <details class="meta">
+    <summary>Usuarios de prueba</summary>
+    <p>admin&#64;reuse.cl / Admin123 (ADMIN)</p>
+    <p>ana&#64;reuse.cl, bruno&#64;reuse.cl, carla&#64;reuse.cl / Usuario123</p>
+  </details>
+</section>

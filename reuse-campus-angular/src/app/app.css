@@ -1,0 +1,13 @@
+main {
+  min-height: 72vh;
+  padding: 0 16px;
+}
+
+.pie {
+  text-align: center;
+  padding: 18px;
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--borde);
+  margin-top: 40px;
+}

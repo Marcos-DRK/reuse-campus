@@ -1,0 +1,113 @@
+/* Estilos globales de ReUse Campus (compartidos por todos los componentes) */
+:root {
+  --primario: #2e7d32;
+  --primario-oscuro: #1b5e20;
+  --peligro: #c62828;
+  --advertencia: #ef6c00;
+  --info: #1565c0;
+  --texto: #263238;
+  --texto-suave: #607d8b;
+  --borde: #d8dde3;
+  --fondo: #fafbfc;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  color: var(--texto);
+  background: var(--fondo);
+}
+
+h2 { color: var(--primario-oscuro); }
+
+.contenedor { max-width: 1100px; margin: 28px auto; }
+.contenedor-chico { max-width: 520px; margin: 40px auto; }
+
+.encabezado-seccion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ---------- Tarjetas ---------- */
+.grilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
+.tarjeta {
+  background: white;
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+.tarjeta h3 { margin: 0 0 8px; color: var(--primario-oscuro); }
+.tarjeta p { margin: 6px 0; }
+.meta { color: var(--texto-suave); font-size: 0.88rem; }
+
+/* ---------- Formularios ---------- */
+form.formulario { display: flex; flex-direction: column; gap: 8px; }
+label { font-weight: 600; font-size: 0.92rem; }
+input, select, textarea {
+  padding: 10px;
+  border: 1px solid #b0bec5;
+  border-radius: 6px;
+  font: inherit;
+  width: 100%;
+}
+input.ng-invalid.ng-touched, select.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched { border-color: var(--peligro); }
+small.error-campo { color: var(--peligro); }
+.filtros { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; align-items: end; margin-bottom: 20px; }
+
+/* ---------- Botones ---------- */
+button, .boton {
+  display: inline-block;
+  padding: 9px 14px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--primario);
+  color: white;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
+button:hover:not(:disabled), .boton:hover { filter: brightness(1.1); }
+button:disabled { background: #b0bec5; cursor: not-allowed; }
+button.secundario, .boton.secundario { background: #607d8b; }
+button.peligro { background: var(--peligro); }
+button.advertencia { background: var(--advertencia); }
+.acciones { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+
+/* ---------- Mensajes ---------- */
+.alerta { padding: 12px 14px; border-radius: 6px; margin: 12px 0; }
+.alerta.error { background: #ffebee; color: var(--peligro); border: 1px solid #ffcdd2; }
+.alerta.exito { background: #e8f5e9; color: var(--primario-oscuro); border: 1px solid #c8e6c9; }
+.alerta.info { background: #e3f2fd; color: var(--info); border: 1px solid #bbdefb; }
+
+/* ---------- Badges de estado ---------- */
+.badge {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  background: #eceff1;
+  color: #37474f;
+}
+.estado-DISPONIBLE, .estado-ACTIVO, .estado-COMPLETADA, .estado-ACEPTADA { background: #c8e6c9; color: #1b5e20; }
+.estado-RESERVADA, .estado-PENDIENTE { background: #fff3e0; color: #e65100; }
+.estado-ENTREGADA { background: #bbdefb; color: #0d47a1; }
+.estado-CANCELADA, .estado-RECHAZADA, .estado-INACTIVO { background: #ffcdd2; color: #b71c1c; }
+.rol-ADMIN { background: #ffd54f; color: #4e342e; }
+.rol-USUARIO { background: #e0f2f1; color: #004d40; }
+.modalidad { background: #ede7f6; color: #4527a0; }
+
+/* ---------- Tablas ---------- */
+.tabla-contenedor { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; background: white; }
+th, td { padding: 10px; border-bottom: 1px solid var(--borde); text-align: left; vertical-align: top; }
+th { background: #f1f8e9; }

@@ -1,0 +1,12 @@
+<header class="cabecera">
+  <div>
+    <h1>♻️ ReUse Campus</h1>
+    <p>Plataforma de reutilización e intercambio de la comunidad educativa</p>
+  </div>
+  @if (auth.usuario(); as usuario) {
+    <div class="usuario">
+      <strong>{{ usuario.nombre }}</strong>
+      <span class="badge rol-{{ usuario.rol }}">{{ usuario.rol }}</span>
+    </div>
+  }
+</header>

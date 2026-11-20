@@ -1,0 +1,25 @@
+/* Estilos propios del componente Inicio (resumen) */
+.grilla .tarjeta h3 {
+  font-size: 2.2rem;
+  margin-bottom: 4px;
+}
+
+.grilla .tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.grilla .tarjeta .boton {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+.como-funciona {
+  margin-top: 24px;
+}
+
+.como-funciona li {
+  margin: 8px 0;
+  line-height: 1.6;
+}

@@ -1,0 +1,13 @@
+<nav class="menu">
+  <a routerLink="/inicio" routerLinkActive="activo">Inicio</a>
+  <a routerLink="/publicaciones" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">Publicaciones</a>
+  <a routerLink="/publicaciones/nueva" routerLinkActive="activo">Publicar artículo</a>
+  <a routerLink="/mis-publicaciones" routerLinkActive="activo">Mis publicaciones</a>
+  <a routerLink="/mis-solicitudes" routerLinkActive="activo">Mis solicitudes</a>
+  <a routerLink="/entregas" routerLinkActive="activo">Entregas</a>
+  <!-- Opción visible solo para ADMIN. La protección real está en el backend (RN18). -->
+  @if (auth.esAdmin()) {
+    <a routerLink="/admin/usuarios" routerLinkActive="activo">Usuarios</a>
+  }
+  <button type="button" class="secundario salir" (click)="salir()">Cerrar sesión</button>
+</nav>

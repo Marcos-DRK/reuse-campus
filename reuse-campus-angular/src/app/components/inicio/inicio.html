@@ -1,0 +1,45 @@
+<section class="contenedor">
+  <h2>Hola, {{ auth.usuario()?.nombre }} 👋</h2>
+  <p>Publique artículos que ya no usa, solicite los de otros integrantes y coordine la entrega.</p>
+
+  @if (error()) {
+    <p class="alerta error">{{ error() }}</p>
+  }
+
+  @if (resumen(); as r) {
+    <div class="grilla">
+      <article class="tarjeta">
+        <h3>{{ r.disponibles }}</h3>
+        <p>Publicaciones disponibles en la comunidad</p>
+        <a class="boton" routerLink="/publicaciones">Ver publicaciones</a>
+      </article>
+      <article class="tarjeta">
+        <h3>{{ r.misPublicaciones }}</h3>
+        <p>Mis publicaciones · <strong>{{ r.solicitudesPendientesRecibidas }}</strong> solicitudes pendientes por revisar</p>
+        <a class="boton" routerLink="/mis-publicaciones">Revisar</a>
+      </article>
+      <article class="tarjeta">
+        <h3>{{ r.misSolicitudesPendientes }}</h3>
+        <p>Solicitudes mías en espera de respuesta</p>
+        <a class="boton" routerLink="/mis-solicitudes">Mis solicitudes</a>
+      </article>
+      <article class="tarjeta">
+        <h3>{{ r.entregasPendientes }}</h3>
+        <p>Entregas / intercambios pendientes</p>
+        <a class="boton" routerLink="/entregas">Ver entregas</a>
+      </article>
+    </div>
+  } @else if (!error()) {
+    <p>Cargando resumen...</p>
+  }
+
+  <article class="tarjeta como-funciona">
+    <h3>¿Cómo funciona?</h3>
+    <ol>
+      <li>Publica un artículo (queda <span class="badge estado-DISPONIBLE">DISPONIBLE</span>).</li>
+      <li>Otros usuarios envían solicitudes (<span class="badge estado-PENDIENTE">PENDIENTE</span>).</li>
+      <li>El propietario acepta una: la publicación queda <span class="badge estado-RESERVADA">RESERVADA</span>, las demás solicitudes se <span class="badge estado-RECHAZADA">RECHAZAN</span> y se crea una entrega pendiente.</li>
+      <li>Al confirmar la entrega, queda <span class="badge estado-COMPLETADA">COMPLETADA</span> y la publicación pasa a <span class="badge estado-ENTREGADA">ENTREGADA</span>.</li>
+    </ol>
+  </article>
+</section>

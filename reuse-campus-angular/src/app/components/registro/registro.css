@@ -1,0 +1,13 @@
+/* Estilos propios del componente Registro */
+h2 {
+  text-align: center;
+  margin-top: 0;
+}
+
+form button[type='submit'] {
+  margin-top: 12px;
+}
+
+p:last-child {
+  text-align: center;
+}
