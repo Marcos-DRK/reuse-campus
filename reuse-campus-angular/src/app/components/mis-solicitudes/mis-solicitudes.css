@@ -1,0 +1,14 @@
+/* Estilos propios de Mis solicitudes */
+.tarjeta h3 a {
+  color: var(--primario-oscuro);
+  text-decoration: none;
+}
+
+.tarjeta h3 a:hover {
+  text-decoration: underline;
+}
+
+textarea {
+  resize: vertical;
+  margin-top: 8px;
+}

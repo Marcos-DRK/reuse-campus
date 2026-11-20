@@ -1,0 +1,22 @@
+/* Estilos propios del catálogo de publicaciones */
+.filtros {
+  background: white;
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.filtros .acciones {
+  margin-top: 0;
+}
+
+/* Las tarjetas se estiran para que el botón quede siempre abajo */
+.grilla .tarjeta {
+  display: flex;
+  flex-direction: column;
+}
+
+.grilla .tarjeta .acciones {
+  margin-top: auto;
+  padding-top: 10px;
+}

@@ -1,0 +1,13 @@
+/* Estilos propios de Entregas / Intercambios */
+td a {
+  color: var(--primario-oscuro);
+  font-weight: 600;
+}
+
+td button {
+  white-space: nowrap;
+}
+
+tbody tr:hover {
+  background: #f9fbe7;
+}

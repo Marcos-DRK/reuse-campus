@@ -1,0 +1,48 @@
+<section class="contenedor">
+  <div class="encabezado-seccion">
+    <h2>Mis publicaciones</h2>
+    <a class="boton" routerLink="/publicaciones/nueva">+ Publicar artículo</a>
+  </div>
+
+  @if (cargando()) {
+    <p>Cargando...</p>
+  }
+  @if (error()) {
+    <div class="alerta error">
+      <p>{{ error() }}</p>
+      <button type="button" (click)="cargar()">Reintentar</button>
+    </div>
+  }
+
+  @if (!cargando() && !error()) {
+    <div class="tabla-contenedor">
+      <table>
+        <thead>
+          <tr><th>Título</th><th>Categoría</th><th>Modalidad</th><th>Estado</th><th>Pendientes</th><th>Publicada</th><th></th></tr>
+        </thead>
+        <tbody>
+          @for (p of publicaciones(); track p.id) {
+            <tr>
+              <td>{{ p.titulo }}</td>
+              <td>{{ p.categoria }}</td>
+              <td><span class="badge modalidad">{{ p.modalidad }}</span></td>
+              <td><span class="badge estado-{{ p.estado }}">{{ p.estado }}</span></td>
+              <td>{{ p.solicitudesPendientes }}</td>
+              <td>{{ p.fechaPublicacion | date: 'dd-MM-yyyy' }}</td>
+              <td>
+                <div class="acciones acciones-fila">
+                  <a class="boton" [routerLink]="['/publicaciones', p.id]">Ver / solicitudes</a>
+                  @if (p.estado === 'DISPONIBLE') {
+                    <a class="boton secundario" [routerLink]="['/publicaciones', p.id, 'editar']">Editar</a>
+                  }
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr><td colspan="7">Aún no ha publicado artículos.</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

@@ -1,0 +1,104 @@
+<section class="contenedor">
+  <a routerLink="/publicaciones">← Volver a publicaciones</a>
+
+  @if (cargando()) {
+    <p>Cargando publicación...</p>
+  }
+
+  @if (exito()) {
+    <p class="alerta exito">{{ exito() }}</p>
+  }
+  @if (error()) {
+    <p class="alerta error">{{ error() }}</p>
+  }
+
+  @if (publicacion(); as p) {
+    <article class="tarjeta ficha">
+      <div class="encabezado-seccion">
+        <h2 class="titulo">{{ p.titulo }}</h2>
+        <div>
+          <span class="badge estado-{{ p.estado }}">{{ p.estado }}</span>
+          <span class="badge modalidad">{{ p.modalidad }}</span>
+        </div>
+      </div>
+      <p>{{ p.descripcion }}</p>
+      <p class="meta">
+        Categoría: {{ p.categoria }} · Propietario: {{ p.propietarioNombre }} ·
+        Publicado el {{ p.fechaPublicacion | date: 'dd-MM-yyyy HH:mm' }}
+      </p>
+
+      <!-- Acciones del propietario (o admin) -->
+      @if (puedeAdministrar() && p.estado === 'DISPONIBLE') {
+        <div class="acciones">
+          <a class="boton secundario" [routerLink]="['/publicaciones', p.id, 'editar']">Editar</a>
+          <button type="button" class="advertencia" (click)="cancelarPublicacion()" [disabled]="procesando()">Cancelar publicación</button>
+          <button type="button" class="peligro" (click)="eliminar()" [disabled]="procesando()">Eliminar</button>
+        </div>
+      }
+      @if (p.estado === 'RESERVADA' && puedeAdministrar()) {
+        <p class="alerta info">Publicación reservada. Confirme la entrega en <a routerLink="/entregas">Entregas</a>.</p>
+      }
+    </article>
+
+    <!-- ===== Vista del propietario: solicitudes recibidas ===== -->
+    @if (puedeAdministrar()) {
+      <h3>Solicitudes recibidas ({{ solicitudes().length }})</h3>
+      <div class="tabla-contenedor">
+        <table>
+          <thead>
+            <tr><th>Solicitante</th><th>Mensaje</th><th>Fecha</th><th>Estado</th><th>Acciones</th></tr>
+          </thead>
+          <tbody>
+            @for (s of solicitudes(); track s.id) {
+              <tr>
+                <td>{{ s.solicitanteNombre }}<br><span class="meta">{{ s.solicitanteCorreo }}</span></td>
+                <td>{{ s.mensaje }}</td>
+                <td>{{ s.fechaSolicitud | date: 'dd-MM-yyyy HH:mm' }}</td>
+                <td><span class="badge estado-{{ s.estado }}">{{ s.estado }}</span></td>
+                <td>
+                  <!-- RN07: solo el propietario acepta/rechaza (el backend lo vuelve a validar) -->
+                  @if (esPropietario() && s.estado === 'PENDIENTE' && p.estado === 'DISPONIBLE') {
+                    <div class="acciones acciones-fila">
+                      <button type="button" (click)="aceptar(s)" [disabled]="procesando()">Aceptar</button>
+                      <button type="button" class="peligro" (click)="rechazar(s)" [disabled]="procesando()">Rechazar</button>
+                    </div>
+                  } @else {
+                    <span class="meta">—</span>
+                  }
+                </td>
+              </tr>
+            } @empty {
+              <tr><td colspan="5">Aún no hay solicitudes para esta publicación.</td></tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+
+    <!-- ===== Vista de otro usuario: solicitar ===== -->
+    @if (!esPropietario()) {
+      <article class="tarjeta solicitar">
+        <h3>Solicitar este artículo</h3>
+        @if (miSolicitudPendiente(); as mia) {
+          <p class="alerta info">
+            Ya tiene una solicitud PENDIENTE para esta publicación ("{{ mia.mensaje }}").
+            Puede editarla o cancelarla en <a routerLink="/mis-solicitudes">Mis solicitudes</a>.
+          </p>
+        } @else if (p.estado !== 'DISPONIBLE') {
+          <p class="alerta info">Esta publicación está {{ p.estado }} y no recibe nuevas solicitudes.</p>
+        } @else {
+          <form class="formulario" [formGroup]="formSolicitud" (ngSubmit)="solicitar()">
+            <label for="mensaje">Mensaje para {{ p.propietarioNombre }}</label>
+            <textarea id="mensaje" rows="3" formControlName="mensaje" placeholder="Cuéntele por qué le interesa o qué ofrece a cambio"></textarea>
+            @if (formSolicitud.controls.mensaje.touched && formSolicitud.controls.mensaje.invalid) {
+              <small class="error-campo">El mensaje debe tener entre 5 y 500 caracteres.</small>
+            }
+            <button type="submit" [disabled]="procesando()">Enviar solicitud</button>
+          </form>
+        }
+      </article>
+    } @else {
+      <p class="meta aviso-propio">Esta es su publicación: no puede solicitarla (RN03).</p>
+    }
+  }
+</section>

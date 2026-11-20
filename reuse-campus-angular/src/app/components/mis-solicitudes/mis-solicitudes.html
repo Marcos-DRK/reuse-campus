@@ -1,0 +1,50 @@
+<section class="contenedor">
+  <h2>Mis solicitudes</h2>
+
+  @if (exito()) {
+    <p class="alerta exito">{{ exito() }}</p>
+  }
+  @if (error()) {
+    <p class="alerta error">{{ error() }}</p>
+  }
+  @if (cargando()) {
+    <p>Cargando...</p>
+  }
+
+  @if (!cargando()) {
+    <div class="grilla">
+      @for (s of solicitudes(); track s.id) {
+        <article class="tarjeta">
+          <h3><a [routerLink]="['/publicaciones', s.publicacionId]">{{ s.publicacionTitulo }}</a></h3>
+          <p>
+            Mi solicitud: <span class="badge estado-{{ s.estado }}">{{ s.estado }}</span>
+            · Publicación: <span class="badge estado-{{ s.publicacionEstado }}">{{ s.publicacionEstado }}</span>
+          </p>
+          <p class="meta">Propietario: {{ s.propietarioNombre }} · {{ s.fechaSolicitud | date: 'dd-MM-yyyy HH:mm' }}</p>
+
+          @if (editandoId() === s.id) {
+            <textarea rows="3" [formControl]="mensaje"></textarea>
+            @if (mensaje.touched && mensaje.invalid) {
+              <small class="error-campo">El mensaje debe tener entre 5 y 500 caracteres.</small>
+            }
+            <div class="acciones">
+              <button type="button" (click)="guardarMensaje(s)">Guardar</button>
+              <button type="button" class="secundario" (click)="editandoId.set(null)">Cancelar</button>
+            </div>
+          } @else {
+            <p>"{{ s.mensaje }}"</p>
+            <!-- RN16: editar/cancelar solo mientras esté PENDIENTE -->
+            @if (s.estado === 'PENDIENTE') {
+              <div class="acciones">
+                <button type="button" class="secundario" (click)="editar(s)">Editar mensaje</button>
+                <button type="button" class="peligro" (click)="cancelar(s)">Cancelar solicitud</button>
+              </div>
+            }
+          }
+        </article>
+      } @empty {
+        <p>No ha realizado solicitudes. Revise las <a routerLink="/publicaciones">publicaciones disponibles</a>.</p>
+      }
+    </div>
+  }
+</section>

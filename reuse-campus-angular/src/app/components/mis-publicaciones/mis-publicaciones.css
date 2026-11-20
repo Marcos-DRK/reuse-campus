@@ -1,0 +1,13 @@
+/* Estilos propios de Mis publicaciones */
+.acciones-fila {
+  margin: 0;
+  flex-wrap: nowrap;
+}
+
+td:first-child {
+  font-weight: 600;
+}
+
+tbody tr:hover {
+  background: #f9fbe7;
+}

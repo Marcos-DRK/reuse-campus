@@ -1,0 +1,72 @@
+<section class="contenedor">
+  <div class="encabezado-seccion">
+    <h2>Publicaciones de la comunidad</h2>
+    <a class="boton" routerLink="/publicaciones/nueva">+ Publicar artículo</a>
+  </div>
+
+  <form class="filtros" [formGroup]="filtros" (ngSubmit)="cargar()">
+    <div>
+      <label for="texto">Buscar</label>
+      <input id="texto" type="text" formControlName="texto" placeholder="Título o descripción">
+    </div>
+    <div>
+      <label for="categoria">Categoría</label>
+      <select id="categoria" formControlName="categoria">
+        <option value="">Todas</option>
+        @for (c of categorias; track c) { <option [value]="c">{{ c }}</option> }
+      </select>
+    </div>
+    <div>
+      <label for="modalidad">Modalidad</label>
+      <select id="modalidad" formControlName="modalidad">
+        <option value="">Todas</option>
+        @for (m of modalidades; track m) { <option [value]="m">{{ m }}</option> }
+      </select>
+    </div>
+    <div>
+      <label for="estado">Estado</label>
+      <select id="estado" formControlName="estado">
+        <option value="">Todos</option>
+        @for (e of estados; track e) { <option [value]="e">{{ e }}</option> }
+      </select>
+    </div>
+    <div class="acciones">
+      <button type="submit">Filtrar</button>
+      <button type="button" class="secundario" (click)="limpiar()">Limpiar</button>
+    </div>
+  </form>
+
+  @if (cargando()) {
+    <p>Cargando publicaciones...</p>
+  }
+
+  @if (error()) {
+    <div class="alerta error">
+      <p>{{ error() }}</p>
+      <button type="button" (click)="cargar()">Reintentar</button>
+    </div>
+  }
+
+  @if (!cargando() && !error()) {
+    <div class="grilla">
+      @for (p of publicaciones(); track p.id) {
+        <article class="tarjeta">
+          <h3>{{ p.titulo }}</h3>
+          <p>
+            <span class="badge estado-{{ p.estado }}">{{ p.estado }}</span>
+            <span class="badge modalidad">{{ p.modalidad }}</span>
+            @if (p.usuarioId === auth.usuario()?.id) { <span class="badge rol-ADMIN">Mía</span> }
+          </p>
+          <p>{{ p.descripcion }}</p>
+          <p class="meta">{{ p.categoria }} · Publicado por {{ p.propietarioNombre }} · {{ p.fechaPublicacion | date: 'dd-MM-yyyy' }}</p>
+          <p class="meta">{{ p.solicitudesPendientes }} solicitud(es) pendiente(s)</p>
+          <div class="acciones">
+            <a class="boton" [routerLink]="['/publicaciones', p.id]">Ver detalle</a>
+          </div>
+        </article>
+      } @empty {
+        <p>No hay publicaciones que coincidan con los filtros.</p>
+      }
+    </div>
+  }
+</section>

@@ -1,0 +1,13 @@
+/* Estilos propios del formulario crear/editar publicación */
+h2 {
+  margin-top: 0;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.acciones {
+  justify-content: flex-end;
+}

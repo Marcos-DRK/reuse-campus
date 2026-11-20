@@ -1,0 +1,46 @@
+<section class="contenedor-chico tarjeta">
+  <h2>{{ esEdicion ? 'Editar publicación' : 'Publicar artículo' }}</h2>
+
+  @if (cargando()) {
+    <p>Cargando información...</p>
+  }
+  @if (error()) {
+    <p class="alerta error">{{ error() }}</p>
+  }
+
+  @if (!cargando() && !bloqueado()) {
+    <form class="formulario" [formGroup]="formulario" (ngSubmit)="guardar()">
+      <label for="titulo">Título</label>
+      <input id="titulo" type="text" formControlName="titulo" placeholder="Ej: Calculadora Casio fx-570">
+      @if (formulario.controls.titulo.touched && formulario.controls.titulo.invalid) {
+        <small class="error-campo">El título debe tener entre 3 y 150 caracteres.</small>
+      }
+
+      <label for="descripcion">Descripción</label>
+      <textarea id="descripcion" rows="4" formControlName="descripcion" placeholder="Estado del artículo, qué incluye, etc."></textarea>
+      @if (formulario.controls.descripcion.touched && formulario.controls.descripcion.invalid) {
+        <small class="error-campo">La descripción debe tener entre 10 y 1000 caracteres.</small>
+      }
+
+      <label for="categoria">Categoría</label>
+      <select id="categoria" formControlName="categoria">
+        <option value="">Seleccione...</option>
+        @for (c of categorias; track c) { <option [value]="c">{{ c }}</option> }
+      </select>
+      @if (formulario.controls.categoria.touched && formulario.controls.categoria.invalid) {
+        <small class="error-campo">Seleccione una categoría.</small>
+      }
+
+      <label for="modalidad">Modalidad</label>
+      <select id="modalidad" formControlName="modalidad">
+        <option value="DONACION">DONACIÓN (lo regalo)</option>
+        <option value="INTERCAMBIO">INTERCAMBIO (lo cambio por otro artículo)</option>
+      </select>
+
+      <div class="acciones">
+        <button type="submit" [disabled]="guardando()">{{ guardando() ? 'Guardando...' : 'Guardar' }}</button>
+        <button type="button" class="secundario" (click)="volver()">Cancelar</button>
+      </div>
+    </form>
+  }
+</section>

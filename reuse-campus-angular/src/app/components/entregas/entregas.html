@@ -1,0 +1,45 @@
+<section class="contenedor">
+  <h2>Entregas / Intercambios</h2>
+  <p class="meta">Se generan automáticamente al aceptar una solicitud. El propietario confirma cuando entrega el artículo.</p>
+
+  @if (exito()) {
+    <p class="alerta exito">{{ exito() }}</p>
+  }
+  @if (error()) {
+    <p class="alerta error">{{ error() }}</p>
+  }
+  @if (cargando()) {
+    <p>Cargando...</p>
+  }
+
+  @if (!cargando()) {
+    <div class="tabla-contenedor">
+      <table>
+        <thead>
+          <tr><th>Artículo</th><th>Propietario</th><th>Receptor</th><th>Mi rol</th><th>Acuerdo</th><th>Entrega</th><th>Estado</th><th></th></tr>
+        </thead>
+        <tbody>
+          @for (e of entregas(); track e.id) {
+            <tr>
+              <td><a [routerLink]="['/publicaciones', e.publicacionId]">{{ e.publicacionTitulo }}</a><br>
+                <span class="badge modalidad">{{ e.modalidad }}</span></td>
+              <td>{{ e.propietarioNombre }}</td>
+              <td>{{ e.receptorNombre }}</td>
+              <td>{{ rolEn(e) }}</td>
+              <td>{{ e.fechaAcuerdo | date: 'dd-MM-yyyy HH:mm' }}</td>
+              <td>{{ e.fechaEntrega ? (e.fechaEntrega | date: 'dd-MM-yyyy HH:mm') : '—' }}</td>
+              <td><span class="badge estado-{{ e.estado }}">{{ e.estado }}</span></td>
+              <td>
+                @if (puedeConfirmar(e)) {
+                  <button type="button" (click)="completar(e)" [disabled]="procesando()">Confirmar entrega</button>
+                }
+              </td>
+            </tr>
+          } @empty {
+            <tr><td colspan="8">No hay entregas registradas.</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

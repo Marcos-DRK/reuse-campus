@@ -1,0 +1,26 @@
+/* Estilos propios del detalle de publicación */
+.ficha {
+  margin-top: 14px;
+}
+
+.titulo {
+  margin: 0;
+}
+
+.solicitar {
+  margin-top: 20px;
+}
+
+.aviso-propio {
+  margin-top: 16px;
+}
+
+/* Botones Aceptar / Rechazar dentro de la tabla de solicitudes */
+.acciones-fila {
+  margin: 0;
+  flex-wrap: nowrap;
+}
+
+textarea {
+  resize: vertical;
+}
