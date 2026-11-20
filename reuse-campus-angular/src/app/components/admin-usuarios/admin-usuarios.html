@@ -1,0 +1,91 @@
+<section class="contenedor">
+  <h2>Administración de usuarios</h2>
+
+  @if (exito()) {
+    <p class="alerta exito">{{ exito() }}</p>
+  }
+  @if (error()) {
+    <p class="alerta error">{{ error() }}</p>
+  }
+
+  <article class="tarjeta">
+    <h3>{{ editandoId() === null ? 'Nuevo usuario' : 'Editar usuario #' + editandoId() }}</h3>
+    <form class="formulario" [formGroup]="formulario" (ngSubmit)="guardar()">
+      <div class="filtros campos-usuario">
+        <div>
+          <label for="nombre">Nombre</label>
+          <input id="nombre" type="text" formControlName="nombre">
+          @if (formulario.controls.nombre.touched && formulario.controls.nombre.invalid) {
+            <small class="error-campo">Mínimo 3 caracteres.</small>
+          }
+        </div>
+        <div>
+          <label for="correo">Correo</label>
+          <input id="correo" type="email" formControlName="correo">
+          @if (formulario.controls.correo.touched && formulario.controls.correo.invalid) {
+            <small class="error-campo">Correo inválido.</small>
+          }
+        </div>
+        <div>
+          <label for="password">Contraseña {{ editandoId() !== null ? '(opcional)' : '' }}</label>
+          <input id="password" type="password" formControlName="password">
+          @if (formulario.controls.password.touched && formulario.controls.password.invalid) {
+            <small class="error-campo">Mínimo 6 caracteres.</small>
+          }
+        </div>
+        <div>
+          <label for="rol">Rol</label>
+          <select id="rol" formControlName="rol">
+            <option value="USUARIO">USUARIO</option>
+            <option value="ADMIN">ADMIN</option>
+          </select>
+        </div>
+        <div>
+          <label for="estado">Estado</label>
+          <select id="estado" formControlName="estado">
+            <option value="ACTIVO">ACTIVO</option>
+            <option value="INACTIVO">INACTIVO</option>
+          </select>
+        </div>
+      </div>
+      <div class="acciones">
+        <button type="submit">{{ editandoId() === null ? 'Crear usuario' : 'Guardar cambios' }}</button>
+        @if (editandoId() !== null) {
+          <button type="button" class="secundario" (click)="nuevo()">Cancelar edición</button>
+        }
+      </div>
+    </form>
+  </article>
+
+  @if (cargando()) {
+    <p>Cargando usuarios...</p>
+  } @else {
+    <div class="tabla-contenedor tabla-usuarios">
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th><th>Registro</th><th></th></tr>
+        </thead>
+        <tbody>
+          @for (u of usuarios(); track u.id) {
+            <tr>
+              <td>{{ u.id }}</td>
+              <td>{{ u.nombre }}</td>
+              <td>{{ u.correo }}</td>
+              <td><span class="badge rol-{{ u.rol }}">{{ u.rol }}</span></td>
+              <td><span class="badge estado-{{ u.estado }}">{{ u.estado }}</span></td>
+              <td>{{ u.fechaRegistro | date: 'dd-MM-yyyy' }}</td>
+              <td>
+                <div class="acciones acciones-fila">
+                  <button type="button" class="secundario" (click)="editar(u)">Editar</button>
+                  @if (u.estado === 'ACTIVO' && u.id !== auth.usuario()?.id) {
+                    <button type="button" class="peligro" (click)="desactivar(u)">Desactivar</button>
+                  }
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

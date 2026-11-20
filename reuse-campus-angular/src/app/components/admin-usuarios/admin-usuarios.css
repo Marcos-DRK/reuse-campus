@@ -1,0 +1,17 @@
+/* Estilos propios de Administración de usuarios */
+.campos-usuario {
+  margin: 0;
+}
+
+.tabla-usuarios {
+  margin-top: 20px;
+}
+
+.acciones-fila {
+  margin: 0;
+  flex-wrap: nowrap;
+}
+
+tbody tr:hover {
+  background: #f9fbe7;
+}

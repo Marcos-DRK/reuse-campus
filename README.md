@@ -320,7 +320,11 @@ Resultado: **14 pruebas, 14 aprobadas** (verificado también sobre una copia lim
 **Qué partes fueron generadas o propuestas con IA:** prácticamente todo el código inicial del repositorio (carpetas `database/`, `api-reuse-campus/` y `reuse-campus-angular/src/app/`), tomando como guía el estilo de la Actividad 6 (validación de id con `Number.isInteger`, respuestas `res.status().json()`, servicios con HttpClient, Reactive Forms y control flow `@if/@for`).
 
 **Modificaciones, adaptaciones o correcciones realizadas por el estudiante:**
-> ✏️ *Marco: complete esta sección con lo que usted cambió, por ejemplo: decisiones que tomó (SQL Server en lugar de MySQL, LocalDB), ajustes de diseño o texto, cambios de reglas, pruebas extra, correcciones propias y commits posteriores.*
+- Definí el stack y el entorno: SQL Server LocalDB con autenticación de Windows en lugar de MySQL, Angular + Node/Express, y la Actividad 6 como guía de estilo.
+- Revisé el resultado contra la rúbrica y el enunciado, y pedí correcciones. Una de ellas fue que cada componente tuviera sus propios archivos `.ts`, `.html` y `.css`.
+- Probé la aplicación en local (login con los usuarios de prueba, publicar, solicitar, aceptar, completar la entrega) y ejecuté `npm test`.
+- Estudié el código con diagramas por archivo (qué hace cada uno, qué importa y exporta y por qué) para poder explicarlo y modificarlo en la defensa.
+- Organicé y subí yo mismo los commits por etapas en GitHub.
 
 **Cómo se verificó que funciona y cumple las reglas de negocio:**
 
